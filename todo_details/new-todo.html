@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Todo</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <style>
+      body {
+        margin: auto 10rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <form>
+        <input
+          type="checkbox"
+          name="completedCheckbox"
+          id="completedCheckbox"
+        />
+        <label for="completedCheckbox">Completed?</label>
+        <label for="titleInput">Task</label>
+        <input type="text" name="titleInput" id="titleInput" />
+        <button>Save</button>
+      </form>
+    </main>
+
+    <script>
+      (function () {
+        const $q = (selector) => document.querySelector(selector);
+        const completedCheckbox = $q("completedCheckbox");
+        const titleInput = $q("#titleInput");
+        const form = $q("form");
+
+        function saveTodo(event) {
+          event.preventDefault();
+
+          let bodyData = {};
+          fetch("http://localhost:8888/todos/2", {
+            method: "POST",
+            body: JSON.stringify(bodyData),
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+          })
+            .then((response) => response.json())
+            .then((todo) => {})
+            .catch((err) => {});
+        }
+
+        window.onLoad = function () {
+          form.onSubmit = saveTodo;
+        };
+      })();
+    </script>
+  </body>
+</html>
