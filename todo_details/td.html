@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>todo_details</title>
+  </head>
+  <body>
+    <h1>To DO</h1>
+
+    <label for="todoId">Id</label>
+    <input type="text" id="todoId" />
+    <button>Get</button>
+    <div id="todo-card">
+      <span></span>
+      <p></p>
+    </div>
+
+    <script>
+      window.onload = () => {
+        const $q = (selector) => document.querySelector(selector);
+
+        function onButtonClicked() {
+          const id = document.querySelector("#todoId").value;
+          loadTodo(id);
+        }
+
+        function loadTodo(todoId) {
+          const completedSpan = document.querySelector("#todo-card span");
+          const titleParagraph = document.querySelector("#todo-card p");
+
+          fetch(` http://localhost:8888/todos/${todoId}`)
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              completedSpan.innerText = data.completed;
+              titleParagraph.innerText = data.title;
+            });
+        }
+
+        const button = $q("button");
+        button.onclick = onButtonClicked;
+      };
+    </script>
+  </body>
+</html>
