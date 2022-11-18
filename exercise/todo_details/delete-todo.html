@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Todo</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <style>
+      #titleDiv {
+        font-weight: bolder;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h2>Delete</h2>
+      <form>
+        <p>Are you sure you want to delete the todo:</p>
+        <div id="titleDiv"></div>
+        <div>
+          <button>Confirm Delete</button>
+          <a href="./todos.html">cancel</a>
+        </div>
+      </form>
+    </main>
+    <script>
+      (function () {
+        //selector HTMLElements into variables
+        const $q = (selector) => document.querySelector(selector);
+
+        const form = $q("form");
+        const titleDiv = $q("#titleDiv");
+
+        function deleteTodo(event) {
+          event.preventDefault();
+          const id = getTodoId();
+
+          fetch("http://localhost:8888/todos/" + id, {
+            method: "DELETE",
+          })
+            .then(() => {
+              window.location = "./todos.html";
+            })
+            .catch((error) => {
+              console.log(error);
+              messageParagraph.innerText = "An unexpected error occured.";
+            });
+        }
+
+        function loadTodo(todoId) {
+          fetch(`http://localhost:8888/todos/${todoId}`)
+            .then((response) => response.json())
+            .then((todo) => {
+              titleDiv.innerText = todo.title;
+            });
+        }
+
+        function getTodoId() {
+          const params = new URLSearchParams(location.search);
+          return params.get("id");
+        }
+
+        //associate functions with HTMLElement events
+        window.onload = function () {
+          loadTodo(getTodoId());
+          form.onsubmit = deleteTodo;
+        };
+      })();
+    </script>
+  </body>
+</html>

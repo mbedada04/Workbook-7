@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List</title>
+  </head>
+  <body>
+    <div id="message"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Id</th>
+          <th>Item Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>First Item</td>
+          <td><a href="./edit.html">Edit</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      window.onload = () => {
+        const messageDiv = document.querySelector("#message");
+
+        function displayMessage() {
+          if (sessionStorage.message) {
+            messageDiv.innerText = sessionStorage.message;
+          }
+        }
+
+        function removeMessage() {
+          if (sessionStorage.message) {
+            messageDiv.innerText = "";
+            sessionStorage.removeItem("message");
+          }
+        }
+
+        displayMessage();
+        setTimeout(removeMessage, 3000);
+      };
+    </script>
+  </body>
+</html>

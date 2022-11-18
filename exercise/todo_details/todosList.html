@@ -15,11 +15,10 @@
   <body>
     <main>
       <nav>
-        <a href="./edit-todo.html">+</a>
+        <a href="./new-todo.html">+ Add</a>
       </nav>
       <h1>Todo List</h1>
       <table id="todos-table">
-        <tbody>
           <thead>
             <tr>
               <th>Title</th>
@@ -27,7 +26,7 @@
               <th>Action</th>
             </tr>
           </thead>
-        </tbody>
+       <tbody></tbody>
       </table>
     </main>
 
@@ -35,19 +34,26 @@
       (() => {
         const $q = (s) => document.querySelector(s);
 
-        const tbody = $q("#todo-table tbody");
+        const tbody = $q("#todos-table tbody");
 
         function loadData() {
-          return fetch("http://localhost:8888/todos/").then((response) =>
+          return fetch("http://localhost:8888/todos").then((response) =>
             response.json()
           );
         }
 
         function createEditLink(todo) {
           const a = document.createElement("a");
-          a.href = "./edit-todo.html?id=" + todo.id;
-          a.innerText = "Edit";
-          return a;
+          a.href = "./edit-todo.html";
+           a.innerText = "Edit";
+           return a;
+        }
+
+        function createDeleteLink(todo) {
+          const a = document.createElement("a");
+          a.href = "./delete-todo.html";
+           a.innerText = "delete";
+           return a;
         }
 
         function fillTable(todos) {
@@ -56,10 +62,17 @@
             let cell1 = row.insertCell(0);
             let cell2 = row.insertCell(1);
             let cell3 = row.insertCell(2);
+            let cell4 = row.insertCell(3);
             cell2.innerHTML = todo.completed ? "&#10003;" : null;
             cell1.innerText = todo.title;
             const a = createEditLink(todo);
             cell3.appendChild(a);
+            const a1 = createDeleteLink(todo);
+            cell3.appendChild(document.createTextNode(' | '))
+            cell3.appendChild(a1);
+
+
+            
           }
         }
         window.onload = () => {
