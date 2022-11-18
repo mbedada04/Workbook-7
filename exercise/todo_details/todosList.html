@@ -14,19 +14,18 @@
   </head>
   <body>
     <main>
-      <nav>
-        <a href="./new-todo.html">+ Add</a>
-      </nav>
       <h1>Todo List</h1>
+      <div class="menu-bar"><a href="./new-todo.html">&#43; Add</a></div>
+
       <table id="todos-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Completed</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-       <tbody></tbody>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Completed</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
       </table>
     </main>
 
@@ -45,15 +44,15 @@
         function createEditLink(todo) {
           const a = document.createElement("a");
           a.href = "./edit-todo.html";
-           a.innerText = "Edit";
-           return a;
+          a.innerText = "Edit";
+          return a;
         }
 
         function createDeleteLink(todo) {
           const a = document.createElement("a");
           a.href = "./delete-todo.html";
-           a.innerText = "delete";
-           return a;
+          a.innerText = "delete";
+          return a;
         }
 
         function fillTable(todos) {
@@ -68,11 +67,8 @@
             const a = createEditLink(todo);
             cell3.appendChild(a);
             const a1 = createDeleteLink(todo);
-            cell3.appendChild(document.createTextNode(' | '))
+            cell3.appendChild(document.createTextNode(" | "));
             cell3.appendChild(a1);
-
-
-            
           }
         }
         window.onload = () => {
